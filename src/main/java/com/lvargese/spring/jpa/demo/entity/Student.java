@@ -20,7 +20,7 @@ public class Student {
             allocationSize = 2
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence")
-    private long studentId;
+    private Long studentId;
 
     @Column(nullable = false,length = 50)
     private String firstName;
