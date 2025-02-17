@@ -14,7 +14,12 @@ import lombok.*;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "id_sequence",
+            initialValue = 100,
+            allocationSize = 2
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence")
     private long studentId;
 
     @Column(nullable = false,length = 50)
