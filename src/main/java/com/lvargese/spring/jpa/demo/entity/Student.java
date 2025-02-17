@@ -6,11 +6,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 @Entity
 @Table(name="tbl_student", uniqueConstraints = @UniqueConstraint(
         columnNames = {"emailId","guardianEmail"}
 ))
+@Builder
 public class Student {
 
     @Id

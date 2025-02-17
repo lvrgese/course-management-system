@@ -1,0 +1,4 @@
+com\lvargese\spring\jpa\demo\repository\StudentRepository.class
+com\lvargese\spring\jpa\demo\entity\Student.class
+com\lvargese\spring\jpa\demo\entity\Student$StudentBuilder.class
+com\lvargese\spring\jpa\demo\SpringJpaDemoApplication.class
