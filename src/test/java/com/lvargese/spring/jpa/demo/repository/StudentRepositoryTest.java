@@ -27,7 +27,7 @@ class StudentRepositoryTest {
 //        studentRepository.save(s);
 //    }
 
-    @Test
+    //@Test
     public void saveStudentWithGuardian(){
         Guardian guardian = Guardian.builder()
                 .name("Sura")
@@ -43,10 +43,22 @@ class StudentRepositoryTest {
         studentRepository.save(student);
     }
 
-    @Test
+    //@Test
     public void printAllStudents(){
         List<Student> studs= studentRepository.findAll();
         System.out.println("students = " + studs);
+    }
+
+    @Test
+    public void printStudentById(){
+        Student student = studentRepository.findByStudentId(100L);
+        System.out.println("student with id 100 = " + student);
+    }
+
+    @Test
+    public void getStudentsByPattern(){
+        List<Student> students= studentRepository.getStudentByPatternNative();
+        System.out.println("students with S in guardian name = " + students);
     }
   
 }
