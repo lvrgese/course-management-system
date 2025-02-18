@@ -60,5 +60,11 @@ class StudentRepositoryTest {
         List<Student> students= studentRepository.getStudentByPatternNative();
         System.out.println("students with S in guardian name = " + students);
     }
+
+    @Test
+    public void getStudentsByCustomName(){
+        Student student= studentRepository.getStudentByCustomFirstName("Liyons");
+        System.out.println("students with first name Liyons = " + student);
+    }
   
 }
