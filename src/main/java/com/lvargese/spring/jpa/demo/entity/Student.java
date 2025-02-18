@@ -27,10 +27,6 @@ public class Student {
 
     private String lastName;
     private String emailId;
-
-    @Column(nullable = false)
-    private String guardianName;
-
-    private String guardianEmail;
-    private String guardianMobile;
+    @Embedded
+    private Guardian guardian;
 }
