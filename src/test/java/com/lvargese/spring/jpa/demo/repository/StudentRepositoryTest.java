@@ -66,5 +66,11 @@ class StudentRepositoryTest {
         Student student= studentRepository.getStudentByCustomFirstName("Liyons");
         System.out.println("students with first name Liyons = " + student);
     }
+
+    @Test
+    public void getStudentsByCustomNameNamedParam(){
+        Student student= studentRepository.getStudentByCustomFirstNameNamedParam("Liyons");
+        System.out.println("students with first name Liyons as named param = " + student);
+    }
   
 }
