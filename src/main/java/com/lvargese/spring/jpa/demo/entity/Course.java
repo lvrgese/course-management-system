@@ -1,15 +1,13 @@
 package com.lvargese.spring.jpa.demo.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
+@ToString(exclude = "courseMaterial")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +15,8 @@ public class Course {
     private String title;
     private Integer credit;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY)
     @JoinColumn(name = "course_material_id")
     private CourseMaterial courseMaterial;
 }
