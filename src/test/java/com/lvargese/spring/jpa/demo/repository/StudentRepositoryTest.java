@@ -55,6 +55,11 @@ class StudentRepositoryTest {
         System.out.println("student with id 100 = " + student);
     }
 
+    public void printStudentById(Long id){
+        Student student = studentRepository.findByStudentId(id);
+        System.out.println("student with id 100 = " + student);
+    }
+
     @Test
     public void getStudentsByPattern(){
         List<Student> students= studentRepository.getStudentByPatternNative();
@@ -71,6 +76,11 @@ class StudentRepositoryTest {
     public void getStudentsByCustomNameNamedParam(){
         Student student= studentRepository.getStudentByCustomFirstNameNamedParam("Liyons");
         System.out.println("students with first name Liyons as named param = " + student);
+    }
+    @Test
+    public void updateStudentNameById(){
+        studentRepository.updateStudentNameById(100L,"LiyonsV");
+        printStudentById(100L);
     }
   
 }
