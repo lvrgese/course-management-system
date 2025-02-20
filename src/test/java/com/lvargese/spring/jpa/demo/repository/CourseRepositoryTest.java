@@ -2,6 +2,7 @@ package com.lvargese.spring.jpa.demo.repository;
 
 import com.lvargese.spring.jpa.demo.entity.Course;
 import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
+import com.lvargese.spring.jpa.demo.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,5 +35,23 @@ class CourseRepositoryTest {
         List<Course> courses = courseRepository.findAll();
         System.out.println("courses = " + courses.get(0).getTitle());
         
+    }
+
+    @Test
+    public void saveCourseWithTeacher(){
+        Teacher teacher = Teacher.builder()
+                .firstName("Ravi")
+                .lastName("K")
+                .build();
+        CourseMaterial material = CourseMaterial.builder()
+                .url("www.google.com")
+                .build();
+        Course course= Course.builder()
+                .title("JPA Course")
+                .credit(5)
+                .courseMaterial(material)
+                .teacher(teacher)
+                .build();
+        courseRepository.save(course);
     }
 }

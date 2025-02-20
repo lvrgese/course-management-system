@@ -16,8 +16,12 @@ public class Course {
     private Integer credit;
 
     @OneToOne(cascade = CascadeType.ALL,
-    fetch = FetchType.LAZY,
+    fetch = FetchType.EAGER,
     optional = false)
     @JoinColumn(name = "course_material_id")
     private CourseMaterial courseMaterial;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 }
