@@ -1,3 +1,5 @@
+com\lvargese\spring\jpa\demo\repository\CourseMaterialRepositoryTest.class
+com\lvargese\spring\jpa\demo\repository\TeacherRepositoryTest.class
 com\lvargese\spring\jpa\demo\repository\StudentRepositoryTest.class
 com\lvargese\spring\jpa\demo\SpringJpaDemoApplicationTests.class
 com\lvargese\spring\jpa\demo\repository\CourseRepositoryTest.class

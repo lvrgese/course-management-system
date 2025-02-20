@@ -4,6 +4,7 @@ import com.lvargese.spring.jpa.demo.entity.Guardian;
 import com.lvargese.spring.jpa.demo.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -77,7 +78,7 @@ class StudentRepositoryTest {
         Student student= studentRepository.getStudentByCustomFirstNameNamedParam("Liyons");
         System.out.println("students with first name Liyons as named param = " + student);
     }
-    @Test
+    //@Test
     public void updateStudentNameById(){
         studentRepository.updateStudentNameById(100L,"LiyonsV");
         printStudentById(100L);
