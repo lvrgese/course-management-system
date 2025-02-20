@@ -9,10 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lvargese</groupId>
-	<artifactId>spring-jpa-demo</artifactId>
+	<artifactId>courseapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-jpa-demo</name>
-	<description>Demo project for Spring JPA Connection</description>
+	<name>Course Management System</name>
+	<description>A Spring Boot REST API for managing students, teachers, courses, and course materials with JPA and MySQL.</description>
+
 	<url/>
 	<licenses>
 		<license/>

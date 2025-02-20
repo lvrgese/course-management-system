@@ -1,15 +1,14 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.Course;
-import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
-import com.lvargese.spring.jpa.demo.entity.Teacher;
+import com.lvargese.courseapi.entity.Course;
+import com.lvargese.courseapi.entity.CourseMaterial;
+import com.lvargese.courseapi.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CourseRepositoryTest {
@@ -17,7 +16,8 @@ class CourseRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
 
-    //@Test
+    @Test
+    @Rollback(true)
     public void saveCourse(){
         CourseMaterial material = CourseMaterial.builder()
                 .url("www.google.com")
@@ -38,6 +38,7 @@ class CourseRepositoryTest {
     }
 
     @Test
+    @Rollback(true)
     public void saveCourseWithTeacher(){
         Teacher teacher = Teacher.builder()
                 .firstName("Ravi")

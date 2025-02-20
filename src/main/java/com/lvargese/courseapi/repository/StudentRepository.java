@@ -1,6 +1,6 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.Student;
+import com.lvargese.courseapi.entity.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

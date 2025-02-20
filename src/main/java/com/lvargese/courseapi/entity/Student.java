@@ -1,4 +1,4 @@
-package com.lvargese.spring.jpa.demo.entity;
+package com.lvargese.courseapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,13 +1,11 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
+import com.lvargese.courseapi.entity.CourseMaterial;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CourseMaterialRepositoryTest {

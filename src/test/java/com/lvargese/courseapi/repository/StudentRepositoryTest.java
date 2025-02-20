@@ -1,10 +1,9 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.Course;
-import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
-import com.lvargese.spring.jpa.demo.entity.Guardian;
-import com.lvargese.spring.jpa.demo.entity.Student;
-import net.bytebuddy.description.annotation.AnnotationValue;
+import com.lvargese.courseapi.entity.Course;
+import com.lvargese.courseapi.entity.CourseMaterial;
+import com.lvargese.courseapi.entity.Guardian;
+import com.lvargese.courseapi.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
-import java.security.Guard;
 import java.util.List;
 
 @SpringBootTest
@@ -36,7 +34,8 @@ class StudentRepositoryTest {
 //        studentRepository.save(s);
 //    }
 
-    //@Test
+    @Test
+    @Rollback(true)
     public void saveStudentWithGuardian(){
         Guardian guardian = Guardian.builder()
                 .name("Sura")
@@ -52,7 +51,7 @@ class StudentRepositoryTest {
         studentRepository.save(student);
     }
 
-    //@Test
+    @Test
     public void printAllStudents(){
         List<Student> studs= studentRepository.findAll();
         System.out.println("students = " + studs);
@@ -86,7 +85,8 @@ class StudentRepositoryTest {
         Student student= studentRepository.getStudentByCustomFirstNameNamedParam("Liyons");
         System.out.println("students with first name Liyons as named param = " + student);
     }
-    //@Test
+    @Test
+    @Rollback(true)
     public void updateStudentNameById(){
         studentRepository.updateStudentNameById(100L,"LiyonsV");
         printStudentById(100L);
@@ -131,6 +131,7 @@ class StudentRepositoryTest {
     }
 
     @Test
+    @Rollback(true)
     public void saveStudentWithCourseAndGuardian(){
         Guardian guardian = Guardian.builder()
                 .name("Mohan")

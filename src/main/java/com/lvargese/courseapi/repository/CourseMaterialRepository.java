@@ -1,6 +1,6 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
+import com.lvargese.courseapi.entity.CourseMaterial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

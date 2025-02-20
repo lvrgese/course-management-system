@@ -1,14 +1,12 @@
-package com.lvargese.spring.jpa.demo.repository;
+package com.lvargese.courseapi.repository;
 
-import com.lvargese.spring.jpa.demo.entity.Course;
-import com.lvargese.spring.jpa.demo.entity.Teacher;
+import com.lvargese.courseapi.entity.Course;
+import com.lvargese.courseapi.entity.Teacher;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-
-import java.util.List;
 
 
 @SpringBootTest
@@ -27,7 +25,6 @@ class TeacherRepositoryTest {
         Teacher teacher= Teacher.builder()
                 .firstName("Suresh")
                 .lastName("PT")
-                //.courses(List.of(course))
                 .build();
         teacherRepository.save(teacher);
     }
