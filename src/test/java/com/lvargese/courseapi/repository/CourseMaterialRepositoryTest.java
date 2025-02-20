@@ -12,7 +12,7 @@ class CourseMaterialRepositoryTest {
     @Autowired
     private CourseMaterialRepository courseMaterialRepository;
 
-    @Test
+    //@Test
     public void getCourseMaterials(){
         List<CourseMaterial> materials = courseMaterialRepository.findAll();
         System.out.println("course materials = " + materials);

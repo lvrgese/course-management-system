@@ -1,0 +1,5 @@
+com\lvargese\courseapi\repository\StudentRepositoryTest.class
+com\lvargese\courseapi\repository\CourseRepositoryTest.class
+com\lvargese\courseapi\repository\TeacherRepositoryTest.class
+com\lvargese\courseapi\repository\CourseMaterialRepositoryTest.class
+com\lvargese\courseapi\CourseSystemApplicationTests.class

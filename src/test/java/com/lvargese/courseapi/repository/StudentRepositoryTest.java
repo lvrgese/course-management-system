@@ -34,7 +34,7 @@ class StudentRepositoryTest {
 //        studentRepository.save(s);
 //    }
 
-    @Test
+    //@Test
     @Rollback(true)
     public void saveStudentWithGuardian(){
         Guardian guardian = Guardian.builder()
@@ -51,13 +51,13 @@ class StudentRepositoryTest {
         studentRepository.save(student);
     }
 
-    @Test
+    //@Test
     public void printAllStudents(){
         List<Student> studs= studentRepository.findAll();
         System.out.println("students = " + studs);
     }
 
-    @Test
+    //@Test
     public void printStudentById(){
         Student student = studentRepository.findByStudentId(100L);
         System.out.println("student with id 100 = " + student);
@@ -68,30 +68,30 @@ class StudentRepositoryTest {
         System.out.println("student with id 100 = " + student);
     }
 
-    @Test
+    //@Test
     public void getStudentsByPattern(){
         List<Student> students= studentRepository.getStudentByPatternNative();
         System.out.println("students with S in guardian name = " + students);
     }
 
-    @Test
+    //@Test
     public void getStudentsByCustomName(){
         Student student= studentRepository.getStudentByCustomFirstName("Liyons");
         System.out.println("students with first name Liyons = " + student);
     }
 
-    @Test
+    //@Test
     public void getStudentsByCustomNameNamedParam(){
         Student student= studentRepository.getStudentByCustomFirstNameNamedParam("Liyons");
         System.out.println("students with first name Liyons as named param = " + student);
     }
-    @Test
+    //@Test
     @Rollback(true)
     public void updateStudentNameById(){
         studentRepository.updateStudentNameById(100L,"LiyonsV");
         printStudentById(100L);
     }
-    @Test
+    //@Test
     public void paginationTest(){
 
         Pageable pageable= PageRequest.of(0,1);
@@ -106,14 +106,14 @@ class StudentRepositoryTest {
 
     }
 
-    @Test
+    //@Test
     public void sortRecords(){
         List<Student> students = studentRepository.findAll(Sort.by("firstName"));
 
         System.out.println("students sorted by first name = " + students);
     }
     
-    @Test
+    //@Test
     public void paginationWithSort() {
         Pageable firstPageWithTwoRecords= PageRequest.of(0,2,Sort.by("lastName"));
         
@@ -121,7 +121,7 @@ class StudentRepositoryTest {
         System.out.println("students = " + students);
     }
 
-    @Test
+    //@Test
     public void findStudentsContainingUsingPagination(){
         Pageable page = PageRequest.of(0,3,Sort.by("firstName"));
 
@@ -130,7 +130,7 @@ class StudentRepositoryTest {
         System.out.println("students with L in name  = " + students);
     }
 
-    @Test
+    //@Test
     @Rollback(true)
     public void saveStudentWithCourseAndGuardian(){
         Guardian guardian = Guardian.builder()

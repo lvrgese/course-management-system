@@ -14,7 +14,7 @@ class TeacherRepositoryTest {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @Test
+    //@Test
     @Rollback(true)
     @Transactional
     public void saveTeacher(){

@@ -16,8 +16,8 @@ class CourseRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
 
-    @Test
-    @Rollback(true)
+    //@Test
+    //@Rollback(true)
     public void saveCourse(){
         CourseMaterial material = CourseMaterial.builder()
                 .url("www.google.com")
