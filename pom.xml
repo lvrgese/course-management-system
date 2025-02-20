@@ -11,7 +11,7 @@
 	<groupId>com.lvargese</groupId>
 	<artifactId>courseapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Course Management System</name>
+	<name>course-management-system</name>
 	<description>A Spring Boot REST API for managing students, teachers, courses, and course materials with JPA and MySQL.</description>
 
 	<url/>
