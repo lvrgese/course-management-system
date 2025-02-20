@@ -4,8 +4,10 @@ import com.lvargese.spring.jpa.demo.entity.Guardian;
 import com.lvargese.spring.jpa.demo.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -82,6 +84,20 @@ class StudentRepositoryTest {
     public void updateStudentNameById(){
         studentRepository.updateStudentNameById(100L,"LiyonsV");
         printStudentById(100L);
+    }
+    @Test
+    public void paginationTest(){
+
+        Pageable pageable= PageRequest.of(0,1);
+
+        Page<Student> page = studentRepository.findAll(pageable);
+
+        List<Student> students = page.getContent();
+
+        var count= page.getTotalElements();
+        System.out.println("Student-1st page with 1 record = " + students + "No: of students " + count);
+
+
     }
   
 }
