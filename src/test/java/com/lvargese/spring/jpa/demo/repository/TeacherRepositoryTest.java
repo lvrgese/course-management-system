@@ -31,6 +31,6 @@ class TeacherRepositoryTest {
                 .build();
         teacherRepository.save(teacher);
     }
-    
+
 
 }
