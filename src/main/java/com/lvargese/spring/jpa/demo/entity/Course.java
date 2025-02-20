@@ -2,6 +2,8 @@ package com.lvargese.spring.jpa.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,4 +26,6 @@ public class Course {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
 }

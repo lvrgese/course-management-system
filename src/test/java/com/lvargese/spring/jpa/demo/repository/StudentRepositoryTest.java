@@ -1,14 +1,20 @@
 package com.lvargese.spring.jpa.demo.repository;
 
+import com.lvargese.spring.jpa.demo.entity.Course;
+import com.lvargese.spring.jpa.demo.entity.CourseMaterial;
 import com.lvargese.spring.jpa.demo.entity.Guardian;
 import com.lvargese.spring.jpa.demo.entity.Student;
+import net.bytebuddy.description.annotation.AnnotationValue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 
+import java.security.Guard;
 import java.util.List;
 
 @SpringBootTest
@@ -98,6 +104,58 @@ class StudentRepositoryTest {
         System.out.println("Student-1st page with 1 record = " + students + "No: of students " + count);
 
 
+    }
+
+    @Test
+    public void sortRecords(){
+        List<Student> students = studentRepository.findAll(Sort.by("firstName"));
+
+        System.out.println("students sorted by first name = " + students);
+    }
+    
+    @Test
+    public void paginationWithSort() {
+        Pageable firstPageWithTwoRecords= PageRequest.of(0,2,Sort.by("lastName"));
+        
+        List<Student> students = studentRepository.findAll(firstPageWithTwoRecords).getContent();
+        System.out.println("students = " + students);
+    }
+
+    @Test
+    public void findStudentsContainingUsingPagination(){
+        Pageable page = PageRequest.of(0,3,Sort.by("firstName"));
+
+        List<Student> students = studentRepository.findByFirstNameContaining("L",page).getContent();
+
+        System.out.println("students with L in name  = " + students);
+    }
+
+    @Test
+    public void saveStudentWithCourseAndGuardian(){
+        Guardian guardian = Guardian.builder()
+                .name("Mohan")
+                .email("mohan@gmail.com")
+                .mobile("9834784803")
+                .build();
+
+        CourseMaterial material = CourseMaterial.builder()
+                .url("github.org")
+                .build();
+        Course course= Course.builder()
+                .title("AI")
+                .credit(5)
+                .courseMaterial(material)
+                .build();
+
+        Student student = Student.builder()
+                .firstName("Abhishek")
+                .lastName("N")
+                .emailId("abhishek@gmail.com")
+                .guardian(guardian)
+                .build();
+        student.addCourse(course);
+
+        studentRepository.save(student);
     }
   
 }

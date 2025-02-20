@@ -2,6 +2,8 @@ package com.lvargese.spring.jpa.demo.repository;
 
 import com.lvargese.spring.jpa.demo.entity.Student;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +43,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             nativeQuery = true
     )
     void updateStudentNameById(Long id, String name);
+
+    Page<Student> findByFirstNameContaining(String name, Pageable pageable);
 }

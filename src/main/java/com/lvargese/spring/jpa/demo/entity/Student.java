@@ -3,6 +3,9 @@ package com.lvargese.spring.jpa.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -29,4 +32,17 @@ public class Student {
     private String emailId;
     @Embedded
     private Guardian guardian;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="student_course",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "studentId"),
+            inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "courseId")
+    )
+    private List<Course> courses;
+
+    public void addCourse(Course course){
+        if(courses == null)
+            courses= new ArrayList<>();
+        courses.add(course);
+    }
 }
