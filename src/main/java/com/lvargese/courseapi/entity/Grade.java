@@ -23,17 +23,15 @@ public class Grade {
     @Pattern(regexp = "[A-F]") //Only allows A,B,C,D,E,F
     private String gradeValue;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
-    @Column(unique = true)
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "course_id")
-    @Column(unique = true)
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "teacher_id")
     private Teacher assignedBy;
     @CreationTimestamp
