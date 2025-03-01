@@ -24,9 +24,10 @@ public class Course {
     optional = false)
     @JoinColumn(name = "course_material_id")
     private CourseMaterial courseMaterial;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses",
+            fetch = FetchType.LAZY)
     private List<Student> students;
 }

@@ -21,8 +21,8 @@ public class Teacher {
     private String firstName;
     @Column(length = 50)
     private String lastName;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Course> courses;
 }

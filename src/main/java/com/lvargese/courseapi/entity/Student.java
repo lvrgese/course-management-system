@@ -27,11 +27,11 @@ public class Student {
     private String firstName;
     @Column(length = 50)
     private String lastName;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String emailId;
     @Embedded
     private Guardian guardian;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name="student_course",
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "studentId"),

@@ -18,12 +18,23 @@ import java.time.LocalDateTime;
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long grade_id;
+    private Long gradeId;
     @Column(nullable = false)
     @Pattern(regexp = "[A-F]") //Only allows A,B,C,D,E,F
-    private String grade_value;
+    private String gradeValue;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    @Column(unique = true)
     private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    @Column(unique = true)
     private Course course;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher assignedBy;
     @CreationTimestamp
     private LocalDateTime createdAt;
