@@ -15,8 +15,8 @@ public class CourseMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseMaterialId;
+    @Column(nullable = false,unique = true)
     private String url;
-
     @OneToOne(mappedBy = "courseMaterial")
     private Course course;
 }

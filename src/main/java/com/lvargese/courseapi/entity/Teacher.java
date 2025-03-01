@@ -17,10 +17,12 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teacherId;
+    @Column(nullable = false, length = 50)
     private String firstName;
+    @Column(length = 50)
     private String lastName;
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "teacher_id")
-//    private List<Course> courses;
+    @Column(unique = true)
+    private String email;
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL)
+    private List<Course> courses;
 }

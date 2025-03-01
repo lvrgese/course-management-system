@@ -15,7 +15,6 @@ import java.util.List;
 ))
 @Builder
 public class Student {
-
     @Id
     @SequenceGenerator(
             name = "id_sequence",
@@ -24,11 +23,11 @@ public class Student {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence")
     private Long studentId;
-
     @Column(nullable = false,length = 50)
     private String firstName;
-
+    @Column(length = 50)
     private String lastName;
+    @Column(unique = true)
     private String emailId;
     @Embedded
     private Guardian guardian;
@@ -39,7 +38,6 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "courseId")
     )
     private List<Course> courses;
-
     public void addCourse(Course course){
         if(courses == null)
             courses= new ArrayList<>();
