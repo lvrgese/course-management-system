@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class StudentDTO {
     private String lastName;
     @Email(message = "Student email format is invalid ")
     @NotBlank(message = "Student email is required")
-    private String email;
+    private String emailId;
     @NotBlank(message = "Guardian name is required")
     private String guardianName;
     @Email(message = "Guardian email format is invalid ")
@@ -26,4 +28,5 @@ public class StudentDTO {
     private String guardianEmail;
     @NotBlank(message = "Guardian mobile number is required")
     private String guardianMobile;
+    private List<CourseDTO> courses;
 }
