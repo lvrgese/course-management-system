@@ -8,11 +8,17 @@ import com.lvargese.courseapi.entity.CourseMaterial;
 import com.lvargese.courseapi.entity.Student;
 import com.lvargese.courseapi.entity.Teacher;
 import com.lvargese.courseapi.exception.DuplicateEnrollmentException;
+import com.lvargese.courseapi.exception.InvalidRequestException;
 import com.lvargese.courseapi.exception.ResourceNotFoundException;
 import com.lvargese.courseapi.repository.CourseRepository;
 import com.lvargese.courseapi.repository.StudentRepository;
 import com.lvargese.courseapi.repository.TeacherRepository;
+import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,13 +69,28 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseDto> getAllCourses() {
-        List<Course> courseList = courseRepository.findAll();
+    public PagedResponse<CourseDto> getAllCourses(Integer pageNumber, Integer size, String sortBy, String dir) {
+        Sort.Direction direction;
+        try{
+            direction =Sort.Direction.fromString(dir);
+        }
+        catch (IllegalArgumentException e){
+            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
+        }
+        Sort sort= Sort.by(direction,sortBy);
+        Pageable pageable= PageRequest.of(pageNumber,size,sort);
+        Page<Course> page= courseRepository.findAll(pageable);
         List<CourseDto> dtoList=new ArrayList<>();
-        for(Course c : courseList){
+        for(Course c : page.getContent()){
             dtoList.add(getDtoFromCourse(c));
         }
-        return dtoList;
+        return new PagedResponse<>(
+                dtoList,
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumber(),
+                page.getSize()
+        );
     }
 
     @Override

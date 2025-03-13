@@ -5,9 +5,15 @@ import com.lvargese.courseapi.dto.CourseMaterialDto;
 import com.lvargese.courseapi.dto.TeacherDto;
 import com.lvargese.courseapi.entity.Course;
 import com.lvargese.courseapi.entity.Teacher;
+import com.lvargese.courseapi.exception.InvalidRequestException;
 import com.lvargese.courseapi.exception.ResourceNotFoundException;
 import com.lvargese.courseapi.repository.TeacherRepository;
+import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,14 +47,30 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public List<TeacherDto> getAllTeachers() {
+    public PagedResponse<TeacherDto> getAllTeachers(Integer pageNumber, Integer size, String sortBy, String dir) {
 
-        List<Teacher> teacherList = teacherRepository.findAll();
+        Sort.Direction direction;
+        try{
+            direction =Sort.Direction.fromString(dir);
+        }
+        catch (IllegalArgumentException e){
+            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
+        }
+        Sort sort= Sort.by(direction,sortBy);
+        Pageable pageable= PageRequest.of(pageNumber,size,sort);
+        Page<Teacher> page= teacherRepository.findAll(pageable);
+
         List<TeacherDto> dtoList=new ArrayList<>();
-        for(Teacher t : teacherList){
+        for(Teacher t : page.getContent()){
             dtoList.add(getDtoFromTeacher(t));
         }
-        return dtoList;
+        return new PagedResponse<>(
+                dtoList,
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumber(),
+                page.getSize()
+        );
     }
 
     @Override

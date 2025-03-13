@@ -6,9 +6,15 @@ import com.lvargese.courseapi.dto.StudentDto;
 import com.lvargese.courseapi.entity.Course;
 import com.lvargese.courseapi.entity.Guardian;
 import com.lvargese.courseapi.entity.Student;
+import com.lvargese.courseapi.exception.InvalidRequestException;
 import com.lvargese.courseapi.exception.ResourceNotFoundException;
 import com.lvargese.courseapi.repository.StudentRepository;
+import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,12 +56,28 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDto> getAllStudents() {
-        List<Student> students = studentRepository.findAll();
+    public PagedResponse<StudentDto> getAllStudents(Integer pageNumber, Integer size, String sortBy, String dir) {
+        Sort.Direction direction;
+        try{
+            direction =Sort.Direction.fromString(dir);
+        }
+        catch (IllegalArgumentException e){
+            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
+        }
+        Sort sort= Sort.by(direction,sortBy);
+        Pageable pageable= PageRequest.of(pageNumber,size,sort);
+        Page<Student> page= studentRepository.findAll(pageable);
+
         List<StudentDto> studentDtoList = new ArrayList<>();
-        for(Student s : students)
+        for(Student s : page.getContent())
             studentDtoList.add(getDtoFromStudent(s));
-        return studentDtoList;
+        return new PagedResponse<>(
+                studentDtoList,
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumber(),
+                page.getSize()
+        );
     }
 
     @Override
