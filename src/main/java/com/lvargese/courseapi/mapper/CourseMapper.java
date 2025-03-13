@@ -1,6 +1,6 @@
 package com.lvargese.courseapi.mapper;
 
-import com.lvargese.courseapi.dto.CourseDTO;
+import com.lvargese.courseapi.dto.CourseDto;
 import com.lvargese.courseapi.entity.Course;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,9 +12,9 @@ public interface CourseMapper {
     CourseMapper instance = Mappers.getMapper(CourseMapper.class);
     @Mapping(source = "teacher.teacherId",target = "teacherId")
     @Mapping(source = "courseMaterial.courseMaterialId",target = "courseMaterialId")
-    CourseDTO toDTO(Course course);
+    CourseDto toDTO(Course course);
 
     @Mapping(source = "teacherId",target="teacher.teacherId")
     @Mapping(source = "courseMaterialId",target = "courseMaterial.courseMaterialId")
-    Course toCourse(CourseDTO courseDTO);
+    Course toCourse(CourseDto courseDTO);
 }

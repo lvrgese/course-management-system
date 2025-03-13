@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudentDTO {
+public class StudentDto {
     private Long studentId;
     @NotBlank(message = "Student first name is required")
     private String firstName;
@@ -28,5 +28,5 @@ public class StudentDTO {
     private String guardianEmail;
     @NotBlank(message = "Guardian mobile number is required")
     private String guardianMobile;
-    private List<CourseDTO> courses;
+    private List<CourseDto> courses;
 }

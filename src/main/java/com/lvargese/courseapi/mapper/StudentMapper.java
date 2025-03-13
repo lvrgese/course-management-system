@@ -1,6 +1,6 @@
 package com.lvargese.courseapi.mapper;
 
-import com.lvargese.courseapi.dto.StudentDTO;
+import com.lvargese.courseapi.dto.StudentDto;
 import com.lvargese.courseapi.entity.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,11 +13,11 @@ public interface StudentMapper {
     @Mapping(source = "guardian.name",target = "guardianName")
     @Mapping(source = "guardian.email",target = "guardianEmail")
     @Mapping(source = "guardian.mobile",target = "guardianMobile")
-    StudentDTO toDTO(Student student);
+    StudentDto toDTO(Student student);
 
     @Mapping(source = "courses",target = "courses")
     @Mapping(source = "guardianName",target = "guardian.name")
     @Mapping(source = "guardianEmail",target = "guardian.email")
     @Mapping(source = "guardianMobile",target = "guardian.mobile")
-    Student toEntity(StudentDTO studentDTO);
+    Student toEntity(StudentDto studentDTO);
 }

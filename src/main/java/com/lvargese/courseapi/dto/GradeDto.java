@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GradeDTO {
+public class GradeDto {
     private Long gradeId;
     @NotBlank(message = "Grade is required")
     @Pattern(regexp = "[A-F]")

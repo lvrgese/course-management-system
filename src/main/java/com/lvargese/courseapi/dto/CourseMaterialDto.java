@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CourseMaterialDTO {
+public class CourseMaterialDto {
     private Long courseMaterialId;
     @NotBlank(message = "URL can't be empty")
     private String url;

@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.lvargese.courseapi.CourseSystemApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.219 s -- in com.lvargese.courseapi.CourseSystemApplicationTests

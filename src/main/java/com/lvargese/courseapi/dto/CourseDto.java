@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CourseDTO {
+public class CourseDto {
     private Long courseId;
     @NotBlank(message = "Title is required")
     private String title;
