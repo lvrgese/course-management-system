@@ -1,9 +1,12 @@
 package com.lvargese.courseapi.dto;
+import com.lvargese.courseapi.entity.Student;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +20,6 @@ public class CourseDto {
     @Min(1)
     @Max(10)
     private Integer credit;
-    @NotNull(message = "Teacher id is required")
     private Long teacherId;
-    @NotNull(message = "Material id is required")
-    private Long courseMaterialId;
+    private CourseMaterialDto courseMaterialDto;
 }

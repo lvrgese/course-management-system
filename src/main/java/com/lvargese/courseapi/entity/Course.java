@@ -15,10 +15,11 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String title;
     @Min(1)
     @Max(10)
+    @Column(nullable = false)
     private Integer credit;
     @OneToOne(cascade = CascadeType.ALL,
     optional = false)
