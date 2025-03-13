@@ -9,7 +9,6 @@ import com.lvargese.courseapi.repository.CourseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 
 @Service
 public class CourseMaterialServiceImpl implements CourseMaterialService{
@@ -59,11 +58,10 @@ public class CourseMaterialServiceImpl implements CourseMaterialService{
 
     @Override
     @Transactional
-    public String deleteMaterialById(Long id) {
-        courseMaterialRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course material not found with Id : " + id));
+    public void deleteMaterialById(Long id) {
+        if(! courseMaterialRepository.existsById(id))
+            throw new ResourceNotFoundException("Course material not found with Id : " + id);
         courseMaterialRepository.deleteById(id);
-        return "Successfully Deleted";
     }
 
     private CourseMaterialDto getDtoFromMaterial(CourseMaterial material){

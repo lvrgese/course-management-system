@@ -6,5 +6,5 @@ public interface CourseMaterialService {
     CourseMaterialDto createCourseMaterial(CourseMaterialDto dto);
     CourseMaterialDto getCourseMaterialById(Long id);
     CourseMaterialDto updateMaterialById(Long id,CourseMaterialDto dto);
-    String deleteMaterialById(Long id);
+    void deleteMaterialById(Long id);
 }

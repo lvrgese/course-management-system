@@ -67,9 +67,8 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public void deleteTeacherById(Long id) {
-        teacherRepository.findById(id).orElseThrow(
-                ()-> new ResourceNotFoundException("Teacher not found with Id: "+ id)
-        );
+        if(teacherRepository.existsById(id))
+            throw new ResourceNotFoundException("Teacher not found with Id: "+ id);
         teacherRepository.deleteById(id);
     }
 

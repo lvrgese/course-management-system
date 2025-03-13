@@ -122,8 +122,8 @@ public class GradeServiceImpl implements GradeService {
     @Override
     @Transactional
     public void deleteGradeById(Long id) {
-        Grade grade = gradeRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Grade not found with Id: "+id));
+        if(! gradeRepository.existsById(id))
+            throw  new ResourceNotFoundException("Grade not found with Id: "+id);
         gradeRepository.deleteById(id);
     }
 

@@ -63,22 +63,17 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto updateStudentById(Long id, StudentDto dto) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Student not found with Id: "+id ));
-        Guardian guardian = Guardian.builder()
-                .name(dto.getGuardianName())
-                .mobile(dto.getGuardianMobile())
-                .email(dto.getGuardianEmail())
-                .build();
 
-        Student updatedStudent=Student.builder()
-                .studentId(student.getStudentId())
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .emailId(dto.getEmailId())
-                .guardian(guardian)
-                .build();
-        Student savedStudent= studentRepository.save(updatedStudent);
+        student.setFirstName(dto.getFirstName());
+        student.setLastName(dto.getLastName());
+        student.setEmailId(dto.getEmailId());
+        student.getGuardian().setName(dto.getGuardianName());
+        student.getGuardian().setMobile(dto.getGuardianMobile());
+        student.getGuardian().setEmail(dto.getGuardianEmail());
+
+        Student savedStudent = studentRepository.save(student);
+
         return getDtoFromStudent(savedStudent);
-
     }
 
     @Override

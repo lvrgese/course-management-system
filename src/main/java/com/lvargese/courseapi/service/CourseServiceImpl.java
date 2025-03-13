@@ -99,8 +99,8 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public void deleteCourseById(Long id) {
-        courseRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Course is not found with id : "+ id));
+        if(! courseRepository.existsById(id))
+            throw new ResourceNotFoundException("Course is not found with id : "+ id);
         courseRepository.deleteById(id);
     }
 
@@ -108,7 +108,7 @@ public class CourseServiceImpl implements CourseService {
     public List<StudentDto> getStudentsByCourseId(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Course is not found with id : "+ id));
-        if(course.getStudents() == null || course.getStudents().isEmpty())
+        if(course.getStudents().isEmpty())
             return List.of();
         List<Student> students = course.getStudents();
         List<StudentDto> studentDtoList =new ArrayList<>();
