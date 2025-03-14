@@ -29,7 +29,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     )
     Student getStudentByCustomFirstName(String firstName);
 
-    //Named param
     @Query(
             value = "select * from tbl_student where first_name=:first_name",
             nativeQuery = true
