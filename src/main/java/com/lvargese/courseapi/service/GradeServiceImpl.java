@@ -38,13 +38,13 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public GradeDto assignGrade(GradeDto dto) {
+    public GradeDto assignGrade(GradeDto dto,Long studentId,Long courseId) {
 
-        Student student = studentRepository.findById(dto.getStudentId())
+        Student student = studentRepository.findById(studentId)
                 .orElseThrow(()->new ResourceNotFoundException("Student not found with Id: "+dto.getStudentId()));
         Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+dto.getTeacherId()));
-        Course course = courseRepository.findById(dto.getCourseId())
+        Course course = courseRepository.findById(courseId)
                 .orElseThrow(()->new ResourceNotFoundException("Course not found with Id: "+dto.getCourseId()));
 
         Grade grade= Grade.builder()
