@@ -71,31 +71,6 @@ public class GradeServiceImpl implements GradeService {
         return getDtoFromGrade(grade);
     }
 
-    @Override
-    public PagedResponse<GradeDto> getAllGrades(Integer pageNumber,Integer size,String sortBy,String dir) {
-        Sort.Direction direction;
-        try{
-            direction =Sort.Direction.fromString(dir);
-        }
-        catch (IllegalArgumentException e){
-            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
-        }
-        Sort sort= Sort.by(direction,sortBy);
-        Pageable pageable= PageRequest.of(pageNumber,size,sort);
-        Page<Grade> page= gradeRepository.findAll(pageable);
-        List<GradeDto> gradeDtoList = new ArrayList<>();
-        for(Grade grade : page.getContent()){
-            gradeDtoList.add(getDtoFromGrade(grade));
-        }
-        return new PagedResponse<>(
-                gradeDtoList,
-                page.getTotalElements(),
-                page.getTotalPages(),
-                page.getNumber(),
-                page.getSize()
-        );
-
-    }
 
     @Override
     public List<GradeDto> getAllGradesByStudentId(Long studentId) {
