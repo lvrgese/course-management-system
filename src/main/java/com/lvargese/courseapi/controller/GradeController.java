@@ -2,8 +2,6 @@ package com.lvargese.courseapi.controller;
 
 import com.lvargese.courseapi.dto.GradeDto;
 import com.lvargese.courseapi.service.GradeService;
-import com.lvargese.courseapi.utils.AppConstants;
-import com.lvargese.courseapi.utils.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

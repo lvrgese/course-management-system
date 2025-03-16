@@ -165,11 +165,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private CourseDto getDtoFromCourse(Course course){
-        CourseMaterialDto materialDto = CourseMaterialDto.builder()
-                .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
-                .url(course.getCourseMaterial().getUrl())
-                .courseId(course.getCourseId())
-                .build();
+        CourseMaterialDto materialDto = null;
+        if(course.getCourseMaterial() !=  null ) {
+            materialDto = CourseMaterialDto.builder()
+                    .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
+                    .url(course.getCourseMaterial().getUrl())
+                    .courseId(course.getCourseId())
+                    .build();
+        }
+
         return CourseDto.builder()
                 .courseId(course.getCourseId())
                 .title(course.getTitle())

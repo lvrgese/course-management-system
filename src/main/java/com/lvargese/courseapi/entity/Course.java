@@ -22,13 +22,14 @@ public class Course {
     @Max(10)
     @Column(nullable = false)
     private Integer credit;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_material_id")
+
+
+    @OneToOne(mappedBy = "course",cascade = CascadeType.ALL)
     private CourseMaterial courseMaterial;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-
 
     @ManyToMany(mappedBy = "courses",
             fetch = FetchType.LAZY)

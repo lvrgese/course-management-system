@@ -2,7 +2,6 @@ package com.lvargese.courseapi.controller;
 
 import com.lvargese.courseapi.dto.CourseDto;
 import com.lvargese.courseapi.dto.TeacherDto;
-import com.lvargese.courseapi.entity.Teacher;
 import com.lvargese.courseapi.service.TeacherService;
 import com.lvargese.courseapi.utils.AppConstants;
 import com.lvargese.courseapi.utils.PagedResponse;
