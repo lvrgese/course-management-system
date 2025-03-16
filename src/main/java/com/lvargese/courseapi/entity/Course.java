@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +30,15 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
+
     @ManyToMany(mappedBy = "courses",
             fetch = FetchType.LAZY)
     private List<Student> students;
+
+    public void addStudent(Student student){
+        if(students == null)
+            students= new ArrayList<>();
+        students.add(student);
+    }
 }

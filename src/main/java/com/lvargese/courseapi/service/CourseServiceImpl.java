@@ -45,16 +45,11 @@ public class CourseServiceImpl implements CourseService {
                     .orElseThrow(()-> new ResourceNotFoundException("Teacher not found with id : "+ courseDto.getTeacherId()));
         }
 
-        CourseMaterial material = CourseMaterial.builder()
-                .url(courseDto.getCourseMaterialDto().getUrl())
-                .build();
-
         Course course = Course.builder()
                 .title(courseDto.getTitle())
                 .credit(courseDto.getCredit())
                 .teacher(teacher)
                 .students(new ArrayList<>())
-                .courseMaterial(material)
                 .build();
         Course savedCourse =  courseRepository.save(course);
 
@@ -161,7 +156,7 @@ public class CourseServiceImpl implements CourseService {
         if(course.getStudents().contains(student))
             throw new DuplicateEnrollmentException("This student is already enrolled in this list");
         course.getStudents().add(student);
-        student.getCourses().add(course);
+        student.addCourse(course);
         Course savedCourse = courseRepository.save(course);
         return getDtoFromCourse(savedCourse);
     }

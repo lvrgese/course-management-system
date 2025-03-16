@@ -101,6 +101,8 @@ public class TeacherServiceImpl implements TeacherService{
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+ id));
 
         List<CourseDto> courseDtoList=new ArrayList<>();
+        if(teacher.getCourses() == null)
+            return courseDtoList;
         for(Course course : teacher.getCourses()){
             CourseMaterialDto materialDto = CourseMaterialDto.builder()
                     .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())

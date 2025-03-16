@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,4 +26,10 @@ public class Teacher {
     private String email;
     @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Course> courses;
+
+    public void addCourse(Course course){
+        if(courses == null)
+            courses= new ArrayList<>();
+        courses.add(course);
+    }
 }

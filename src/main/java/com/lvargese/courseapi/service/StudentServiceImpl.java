@@ -112,7 +112,8 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(()-> new ResourceNotFoundException("Student not found with Id: "+id ));
         List<Course> courses= student.getCourses();
         List<CourseDto> courseDtoList = new ArrayList<>();
-
+        if(courses == null)
+            return courseDtoList;
         for(Course course : courses){
             courseDtoList.add(getCourseDtoFromCourse(course));
         }
