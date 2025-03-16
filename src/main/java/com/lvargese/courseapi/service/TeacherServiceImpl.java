@@ -50,13 +50,14 @@ public class TeacherServiceImpl implements TeacherService{
     public PagedResponse<TeacherDto> getAllTeachers(Integer pageNumber, Integer size, String sortBy, String dir) {
 
         Sort.Direction direction;
+        Sort sort;
         try{
             direction =Sort.Direction.fromString(dir);
+            sort= Sort.by(direction,sortBy);
         }
         catch (IllegalArgumentException e){
-            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
+            throw new InvalidRequestException("Invalid arguments for sorting");
         }
-        Sort sort= Sort.by(direction,sortBy);
         Pageable pageable= PageRequest.of(pageNumber,size,sort);
         Page<Teacher> page= teacherRepository.findAll(pageable);
 
@@ -89,8 +90,11 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public void deleteTeacherById(Long id) {
-        if(teacherRepository.existsById(id))
-            throw new ResourceNotFoundException("Teacher not found with Id: "+ id);
+        Teacher teacher = teacherRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+ id));
+        if (!teacher.getCourses().isEmpty()) {
+            throw new InvalidRequestException("Cannot delete a teacher assigned to courses!");
+        }
         teacherRepository.deleteById(id);
     }
 
@@ -100,6 +104,8 @@ public class TeacherServiceImpl implements TeacherService{
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+ id));
 
         List<CourseDto> courseDtoList=new ArrayList<>();
+        if(teacher.getCourses() == null)
+            return courseDtoList;
         for(Course course : teacher.getCourses()){
             CourseMaterialDto materialDto = CourseMaterialDto.builder()
                     .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())

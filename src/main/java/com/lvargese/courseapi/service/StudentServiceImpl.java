@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -110,9 +111,10 @@ public class StudentServiceImpl implements StudentService {
     public List<CourseDto> getCoursesEnrolledByStudentById(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Student not found with Id: "+id ));
-        List<Course> courses= student.getCourses();
+        Set<Course> courses= student.getCourses();
         List<CourseDto> courseDtoList = new ArrayList<>();
-
+        if(courses == null)
+            return courseDtoList;
         for(Course course : courses){
             courseDtoList.add(getCourseDtoFromCourse(course));
         }

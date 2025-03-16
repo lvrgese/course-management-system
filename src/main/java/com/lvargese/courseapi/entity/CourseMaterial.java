@@ -17,6 +17,8 @@ public class CourseMaterial {
     private Long courseMaterialId;
     @Column(nullable = false,unique = true)
     private String url;
-    @OneToOne(mappedBy = "courseMaterial")
+
+    @OneToOne
+    @JoinColumn(name = "course_id",nullable = false)
     private Course course;
 }

@@ -2,9 +2,8 @@ package com.lvargese.courseapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,10 +36,10 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "studentId"),
             inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "courseId")
     )
-    private List<Course> courses;
+    private Set<Course> courses;
     public void addCourse(Course course){
         if(courses == null)
-            courses= new ArrayList<>();
+            courses= new HashSet<>();
         courses.add(course);
     }
 }

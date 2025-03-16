@@ -16,9 +16,7 @@ public class GradeDto {
     @NotBlank(message = "Grade is required")
     @Pattern(regexp = "[A-F]")
     private String gradeValue;
-    @NotNull
     private Long studentId;
-    @NotNull
     private Long courseId;
     @NotNull
     private Long teacherId;

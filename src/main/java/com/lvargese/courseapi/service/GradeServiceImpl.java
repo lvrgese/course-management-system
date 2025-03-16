@@ -11,12 +11,7 @@ import com.lvargese.courseapi.repository.CourseRepository;
 import com.lvargese.courseapi.repository.GradeRepository;
 import com.lvargese.courseapi.repository.StudentRepository;
 import com.lvargese.courseapi.repository.TeacherRepository;
-import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,14 +33,21 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public GradeDto assignGrade(GradeDto dto) {
+    public GradeDto assignGrade(GradeDto dto,Long studentId,Long courseId) {
 
-        Student student = studentRepository.findById(dto.getStudentId())
+        Student student = studentRepository.findById(studentId)
                 .orElseThrow(()->new ResourceNotFoundException("Student not found with Id: "+dto.getStudentId()));
         Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+dto.getTeacherId()));
-        Course course = courseRepository.findById(dto.getCourseId())
+        Course course = courseRepository.findById(courseId)
                 .orElseThrow(()->new ResourceNotFoundException("Course not found with Id: "+dto.getCourseId()));
+        if(studentRepository.existsByStudentIdAndCoursesContains(studentId, course)){
+            throw new InvalidRequestException("This student (Id : "+studentId +" ) isn't enrolled in course (Id : "+ courseId+" ) ");
+        }
+
+        if (!course.getTeacher().getTeacherId().equals(teacher.getTeacherId())) {
+            throw new InvalidRequestException("This teacher (Id : "+teacher.getTeacherId() +" ) is not assigned to this course (Id : "+courseId +" )!");
+        }
 
         Grade grade= Grade.builder()
                 .gradeValue(dto.getGradeValue())
@@ -71,31 +73,6 @@ public class GradeServiceImpl implements GradeService {
         return getDtoFromGrade(grade);
     }
 
-    @Override
-    public PagedResponse<GradeDto> getAllGrades(Integer pageNumber,Integer size,String sortBy,String dir) {
-        Sort.Direction direction;
-        try{
-            direction =Sort.Direction.fromString(dir);
-        }
-        catch (IllegalArgumentException e){
-            throw new InvalidRequestException("Invalid sorting direction. Use 'asc' or 'desc'");
-        }
-        Sort sort= Sort.by(direction,sortBy);
-        Pageable pageable= PageRequest.of(pageNumber,size,sort);
-        Page<Grade> page= gradeRepository.findAll(pageable);
-        List<GradeDto> gradeDtoList = new ArrayList<>();
-        for(Grade grade : page.getContent()){
-            gradeDtoList.add(getDtoFromGrade(grade));
-        }
-        return new PagedResponse<>(
-                gradeDtoList,
-                page.getTotalElements(),
-                page.getTotalPages(),
-                page.getNumber(),
-                page.getSize()
-        );
-
-    }
 
     @Override
     public List<GradeDto> getAllGradesByStudentId(Long studentId) {
