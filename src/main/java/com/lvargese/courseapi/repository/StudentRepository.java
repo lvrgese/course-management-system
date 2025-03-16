@@ -1,5 +1,6 @@
 package com.lvargese.courseapi.repository;
 
+import com.lvargese.courseapi.entity.Course;
 import com.lvargese.courseapi.entity.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -44,4 +45,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     void updateStudentNameById(Long id, String name);
 
     Page<Student> findByFirstNameContaining(String name, Pageable pageable);
+
+    boolean existsByStudentIdAndCoursesContains(Long studentId, Course course);
 }

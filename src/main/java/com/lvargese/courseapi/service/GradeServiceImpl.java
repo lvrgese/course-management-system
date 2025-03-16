@@ -11,12 +11,7 @@ import com.lvargese.courseapi.repository.CourseRepository;
 import com.lvargese.courseapi.repository.GradeRepository;
 import com.lvargese.courseapi.repository.StudentRepository;
 import com.lvargese.courseapi.repository.TeacherRepository;
-import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,6 +41,13 @@ public class GradeServiceImpl implements GradeService {
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+dto.getTeacherId()));
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(()->new ResourceNotFoundException("Course not found with Id: "+dto.getCourseId()));
+        if(studentRepository.existsByStudentIdAndCoursesContains(studentId, course)){
+            throw new InvalidRequestException("This student (Id : "+studentId +" ) isn't enrolled in course (Id : "+ courseId+" ) ");
+        }
+
+        if (!course.getTeacher().getTeacherId().equals(teacher.getTeacherId())) {
+            throw new InvalidRequestException("This teacher (Id : "+teacher.getTeacherId() +" ) is not assigned to this course (Id : "+courseId +" )!");
+        }
 
         Grade grade= Grade.builder()
                 .gradeValue(dto.getGradeValue())

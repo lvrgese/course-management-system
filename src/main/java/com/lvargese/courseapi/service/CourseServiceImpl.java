@@ -22,7 +22,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -49,7 +52,7 @@ public class CourseServiceImpl implements CourseService {
                 .title(courseDto.getTitle())
                 .credit(courseDto.getCredit())
                 .teacher(teacher)
-                .students(new ArrayList<>())
+                .students(new HashSet<>())
                 .build();
         Course savedCourse =  courseRepository.save(course);
 
@@ -126,7 +129,7 @@ public class CourseServiceImpl implements CourseService {
                 .orElseThrow(()-> new ResourceNotFoundException("Course is not found with id : "+ id));
         if(course.getStudents().isEmpty())
             return List.of();
-        List<Student> students = course.getStudents();
+        Set<Student> students = course.getStudents();
         List<StudentDto> studentDtoList =new ArrayList<>();
 
         for(Student s : students){
@@ -153,9 +156,9 @@ public class CourseServiceImpl implements CourseService {
         Student student = studentRepository.findById(studentId).orElseThrow(
                 ()-> new ResourceNotFoundException("Student not found with Id: "+studentId)
         );
-        if(course.getStudents().contains(student))
+        if(studentRepository.existsByStudentIdAndCoursesContains(studentId, course))
             throw new DuplicateEnrollmentException("This student is already enrolled in this list");
-        course.getStudents().add(student);
+        course.addStudent(student);
         student.addCourse(course);
         Course savedCourse = courseRepository.save(course);
         return getDtoFromCourse(savedCourse);

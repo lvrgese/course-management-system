@@ -3,9 +3,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -23,8 +22,7 @@ public class Course {
     @Max(10)
     @Column(nullable = false)
     private Integer credit;
-    @OneToOne(cascade = CascadeType.ALL,
-    optional = false)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_material_id")
     private CourseMaterial courseMaterial;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,11 +32,11 @@ public class Course {
 
     @ManyToMany(mappedBy = "courses",
             fetch = FetchType.LAZY)
-    private List<Student> students;
+    private Set<Student> students;
 
     public void addStudent(Student student){
         if(students == null)
-            students= new ArrayList<>();
+            students= new HashSet<>();
         students.add(student);
     }
 }
