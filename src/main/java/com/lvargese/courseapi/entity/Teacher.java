@@ -1,5 +1,6 @@
 package com.lvargese.courseapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,8 @@ public class Teacher {
     private String lastName;
     @Column(unique = true,nullable = false)
     private String email;
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "teacher",fetch = FetchType.LAZY)
     private Set<Course> courses;
 
     public void addCourse(Course course){

@@ -7,6 +7,7 @@ import com.lvargese.courseapi.entity.Course;
 import com.lvargese.courseapi.entity.Teacher;
 import com.lvargese.courseapi.exception.InvalidRequestException;
 import com.lvargese.courseapi.exception.ResourceNotFoundException;
+import com.lvargese.courseapi.repository.CourseRepository;
 import com.lvargese.courseapi.repository.TeacherRepository;
 import com.lvargese.courseapi.utils.PagedResponse;
 import jakarta.transaction.Transactional;
@@ -23,9 +24,11 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService{
 
     private final TeacherRepository teacherRepository;
+    private final CourseRepository courseRepository;
 
-    public TeacherServiceImpl(TeacherRepository teacherRepository) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, CourseRepository courseRepository) {
         this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -104,14 +107,19 @@ public class TeacherServiceImpl implements TeacherService{
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+ id));
 
         List<CourseDto> courseDtoList=new ArrayList<>();
-        if(teacher.getCourses() == null)
+        List<Course> courses = courseRepository.findByTeacher(teacher);
+
+        if(courses == null)
             return courseDtoList;
-        for(Course course : teacher.getCourses()){
-            CourseMaterialDto materialDto = CourseMaterialDto.builder()
-                    .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
-                    .url(course.getCourseMaterial().getUrl())
-                    .courseId(course.getCourseId())
-                    .build();
+        for(Course course : courses){
+            CourseMaterialDto materialDto = null;
+            if(course.getCourseMaterial()  != null) {
+                materialDto = CourseMaterialDto.builder()
+                        .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
+                        .url(course.getCourseMaterial().getUrl())
+                        .courseId(course.getCourseId())
+                        .build();
+            }
             courseDtoList.add( CourseDto.builder()
                     .courseId(course.getCourseId())
                     .title(course.getTitle())

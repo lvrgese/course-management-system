@@ -24,10 +24,10 @@ public class Course {
     private Integer credit;
 
 
-    @OneToOne(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "course")
     private CourseMaterial courseMaterial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 

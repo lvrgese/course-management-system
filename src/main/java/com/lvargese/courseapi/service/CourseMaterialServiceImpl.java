@@ -59,8 +59,11 @@ public class CourseMaterialServiceImpl implements CourseMaterialService{
     @Override
     @Transactional
     public void deleteMaterialById(Long id) {
-        if(! courseMaterialRepository.existsById(id))
-            throw new ResourceNotFoundException("Course material not found with Id : " + id);
+        CourseMaterial material = courseMaterialRepository.findById(id).orElseThrow(()->
+           new ResourceNotFoundException("Course material not found with Id : " + id));
+        Course course = material.getCourse();
+        course.setCourseMaterial(null);
+        courseRepository.save(course);
         courseMaterialRepository.deleteById(id);
     }
 

@@ -34,6 +34,10 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public GradeDto assignGrade(GradeDto dto,Long studentId,Long courseId) {
+        Grade existingGrade = gradeRepository.findGradeByStudentIdAndCourseId(studentId,courseId);
+        if(existingGrade != null)
+            throw new InvalidRequestException("This student has already a grade assigned for this course");
+
 
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(()->new ResourceNotFoundException("Student not found with Id: "+dto.getStudentId()));
@@ -108,7 +112,7 @@ public class GradeServiceImpl implements GradeService {
                 .orElseThrow(()->new ResourceNotFoundException("Course not found with Id: "+dto.getCourseId()));
 
         Grade grade= Grade.builder()
-                .gradeId(dto.getGradeId())
+                .gradeId(id)
                 .gradeValue(dto.getGradeValue())
                 .assignedBy(teacher)
                 .student(student)

@@ -19,6 +19,6 @@ public class CourseMaterial {
     private String url;
 
     @OneToOne
-    @JoinColumn(name = "course_id",nullable = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 }
