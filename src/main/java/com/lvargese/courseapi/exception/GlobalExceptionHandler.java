@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleItemAlreadyExistsException(DuplicateEnrollmentException ex){
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ProblemDetail handleInvalidRefreshTokenException(InvalidRefreshTokenException ex){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
+    }
 }
