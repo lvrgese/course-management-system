@@ -154,7 +154,7 @@ class TeacherServiceImplTest {
         assertThrows(ResourceNotFoundException.class,()->teacherService.deleteTeacherById(1L));
         verify(teacherRepository,never()).deleteById(1L);
     }
-    
+
 
     @Test
     public void getCoursesByTeacherId_TeacherNotExists_ShouldThrowResourceNotFoundException(){
