@@ -122,6 +122,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private StudentDto getDtoFromStudent(Student student){
+
+        List<CourseDto> courseDtoList = null;
+        Set<Course> courses=  student.getCourses();
+        if(courses!=null && !courses.isEmpty()) {
+            courseDtoList = new ArrayList<>();
+            for(Course c : courses){
+                courseDtoList.add(getCourseDtoFromCourse(c));
+            }
+        }
+
         return StudentDto.builder()
                 .studentId(student.getStudentId())
                 .firstName(student.getFirstName())
@@ -130,6 +140,7 @@ public class StudentServiceImpl implements StudentService {
                 .guardianName(student.getGuardian().getName())
                 .guardianMobile(student.getGuardian().getMobile())
                 .guardianEmail(student.getGuardian().getEmail())
+                .courses(courseDtoList)
                 .build();
     }
 

@@ -48,7 +48,11 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     boolean existsByStudentIdAndCoursesContains(Long studentId, Course course);
 
-    @Query(value = "SELECT * FROM students s JOIN student_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT s.*, sc.student_id AS sc_student_id " +
+            "FROM tbl_student s " +
+            "INNER JOIN student_course sc ON s.student_id = sc.student_id " +
+            "WHERE sc.course_id = ?1",
+            nativeQuery = true)
     List<Student> findStudentsByCourseId(Long courseId);
 
 }

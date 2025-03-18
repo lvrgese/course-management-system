@@ -45,7 +45,7 @@ public class GradeServiceImpl implements GradeService {
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+dto.getTeacherId()));
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(()->new ResourceNotFoundException("Course not found with Id: "+dto.getCourseId()));
-        if(studentRepository.existsByStudentIdAndCoursesContains(studentId, course)){
+        if(! student.getCourses().contains(course)){
             throw new InvalidRequestException("This student (Id : "+studentId +" ) isn't enrolled in course (Id : "+ courseId+" ) ");
         }
 
