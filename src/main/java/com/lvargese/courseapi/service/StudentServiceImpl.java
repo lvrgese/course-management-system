@@ -122,6 +122,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private StudentDto getDtoFromStudent(Student student){
+
+        List<CourseDto> courseDtoList = null;
+        Set<Course> courses=  student.getCourses();
+        if(courses!=null && !courses.isEmpty()) {
+            courseDtoList = new ArrayList<>();
+            for(Course c : courses){
+                courseDtoList.add(getCourseDtoFromCourse(c));
+            }
+        }
+
         return StudentDto.builder()
                 .studentId(student.getStudentId())
                 .firstName(student.getFirstName())
@@ -130,15 +140,20 @@ public class StudentServiceImpl implements StudentService {
                 .guardianName(student.getGuardian().getName())
                 .guardianMobile(student.getGuardian().getMobile())
                 .guardianEmail(student.getGuardian().getEmail())
+                .courses(courseDtoList)
                 .build();
     }
 
     private CourseDto getCourseDtoFromCourse(Course course){
-        CourseMaterialDto materialDto = CourseMaterialDto.builder()
-                .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
-                .url(course.getCourseMaterial().getUrl())
-                .courseId(course.getCourseId())
-                .build();
+        CourseMaterialDto materialDto = null;
+
+        if(course.getCourseMaterial() != null) {
+            materialDto = CourseMaterialDto.builder()
+                    .courseMaterialId(course.getCourseMaterial().getCourseMaterialId())
+                    .url(course.getCourseMaterial().getUrl())
+                    .courseId(course.getCourseId())
+                    .build();
+        }
         return CourseDto.builder()
                 .courseId(course.getCourseId())
                 .title(course.getTitle())
