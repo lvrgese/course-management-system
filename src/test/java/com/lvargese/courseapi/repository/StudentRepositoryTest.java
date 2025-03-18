@@ -142,19 +142,13 @@ class StudentRepositoryTest {
         CourseMaterial material = CourseMaterial.builder()
                 .url("github.org")
                 .build();
-        Course course= Course.builder()
-                .title("AI")
-                .credit(5)
-                .courseMaterial(material)
-                .build();
 
         Student student = Student.builder()
-                .firstName("Abhishek")
+                .firstName("Abhi")
                 .lastName("N")
                 .emailId("abhishek@gmail.com")
                 .guardian(guardian)
                 .build();
-        student.addCourse(course);
 
         studentRepository.save(student);
     }
