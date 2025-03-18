@@ -95,7 +95,9 @@ public class TeacherServiceImpl implements TeacherService{
     public void deleteTeacherById(Long id) {
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Teacher not found with Id: "+ id));
-        if (!teacher.getCourses().isEmpty()) {
+
+        List<Course> courses = courseRepository.findByTeacher(teacher);
+        if (!courses.isEmpty()) {
             throw new InvalidRequestException("Cannot delete a teacher assigned to courses!");
         }
         teacherRepository.deleteById(id);

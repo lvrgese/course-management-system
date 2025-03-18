@@ -3,8 +3,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -23,21 +21,11 @@ public class Course {
     @Column(nullable = false)
     private Integer credit;
 
-
-    @OneToOne(mappedBy = "course")
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "course_material_id")
     private CourseMaterial courseMaterial;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id",nullable = false)
     private Teacher teacher;
-
-    @ManyToMany(mappedBy = "courses",
-            fetch = FetchType.LAZY)
-    private Set<Student> students;
-
-    public void addStudent(Student student){
-        if(students == null)
-            students= new HashSet<>();
-        students.add(student);
-    }
 }

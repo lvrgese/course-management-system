@@ -30,6 +30,8 @@ public class Student {
     private String emailId;
     @Embedded
     private Guardian guardian;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="student_course",

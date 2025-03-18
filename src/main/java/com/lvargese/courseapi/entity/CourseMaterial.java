@@ -17,8 +17,4 @@ public class CourseMaterial {
     private Long courseMaterialId;
     @Column(nullable = false,unique = true)
     private String url;
-
-    @OneToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
 }

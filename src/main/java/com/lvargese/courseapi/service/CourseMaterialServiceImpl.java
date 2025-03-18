@@ -28,12 +28,11 @@ public class CourseMaterialServiceImpl implements CourseMaterialService{
                 .orElseThrow(()-> new ResourceNotFoundException("Course not found with Id : "+dto.getCourseId()));
 
         CourseMaterial material = CourseMaterial.builder()
-                .course(course)
                 .url(dto.getUrl())
                 .build();
-        CourseMaterial savedMaterial = courseMaterialRepository.save(material);
-        return  getDtoFromMaterial(savedMaterial);
-
+        course.setCourseMaterial(material);
+        Course savedCourse = courseRepository.save(course);
+        return  getDtoFromMaterial(savedCourse.getCourseMaterial());
     }
 
     @Override
@@ -48,10 +47,7 @@ public class CourseMaterialServiceImpl implements CourseMaterialService{
     public CourseMaterialDto updateMaterialById(Long id,CourseMaterialDto dto) {
         CourseMaterial material = courseMaterialRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Course material not found with Id : "+id));
-        Course course = courseRepository.findById(dto.getCourseId())
-                .orElseThrow(()-> new ResourceNotFoundException("Course not found with Id : "+dto.getCourseId()));  //Todo: Custom exception
         material.setUrl(dto.getUrl());
-        material.setCourse(course);
         CourseMaterial savedMaterial = courseMaterialRepository.save(material);
         return  getDtoFromMaterial(savedMaterial);
     }
@@ -61,17 +57,21 @@ public class CourseMaterialServiceImpl implements CourseMaterialService{
     public void deleteMaterialById(Long id) {
         CourseMaterial material = courseMaterialRepository.findById(id).orElseThrow(()->
            new ResourceNotFoundException("Course material not found with Id : " + id));
-        Course course = material.getCourse();
+        Course course = courseRepository.findByCourseMaterialId(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Course not found for course material"));
         course.setCourseMaterial(null);
         courseRepository.save(course);
-        courseMaterialRepository.deleteById(id);
+        courseMaterialRepository.delete(material);
     }
 
     private CourseMaterialDto getDtoFromMaterial(CourseMaterial material){
+        Course course =courseRepository.findByCourseMaterialId(material.getCourseMaterialId())
+                .orElseThrow(()-> new ResourceNotFoundException("Course not found for course material"));
+
         return  CourseMaterialDto.builder()
                 .courseMaterialId(material.getCourseMaterialId())
                 .url(material.getUrl())
-                .courseId(material.getCourse().getCourseId())
+                .courseId(course.getCourseId())
                 .build();
     }
 }
