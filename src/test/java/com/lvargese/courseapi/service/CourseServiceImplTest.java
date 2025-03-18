@@ -53,7 +53,6 @@ class CourseServiceImplTest {
             .credit(5)
             .teacher(teacher)
             .courseMaterial(material)
-            .students(new ArrayList<>())
             .build();
 
     CourseMaterialDto materialDto = CourseMaterialDto.builder()

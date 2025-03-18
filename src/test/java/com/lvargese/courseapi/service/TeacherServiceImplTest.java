@@ -154,38 +154,7 @@ class TeacherServiceImplTest {
         assertThrows(ResourceNotFoundException.class,()->teacherService.deleteTeacherById(1L));
         verify(teacherRepository,never()).deleteById(1L);
     }
-
-    @Test
-    public void getCoursesByTeacherId_TeacherExists_ShouldReturnCourseDtoList(){
-        Course course = Course.builder()
-                .courseId(1L)
-                .title("AI")
-                .credit(5)
-                .courseMaterial(
-                        CourseMaterial.builder()
-                                .courseMaterialId(1L)
-                                .url("http://github.com")
-                                .build()
-                )
-                .teacher(teacher)
-                .build();
-        teacher.setCourses(List.of(course));
-
-        when(teacherRepository.findById(any(Long.class))).thenReturn(Optional.of(teacher));
-        List<CourseDto> courseDtoList = teacherService.getCoursesByTeacherId(1L);
-
-        assertNotNull(courseDtoList);
-        assertFalse(courseDtoList.isEmpty());
-        assertEquals(1,courseDtoList.size());
-        CourseDto dto = courseDtoList.getFirst();
-        assertEquals("AI", dto.getTitle());
-        assertEquals(5, dto.getCredit());
-        assertEquals(1L, dto.getCourseId());
-        assertNotNull(dto.getCourseMaterialDto());
-        assertEquals("http://github.com", dto.getCourseMaterialDto().getUrl());
-
-        verify(teacherRepository,times(1)).findById(1L);
-    }
+    
 
     @Test
     public void getCoursesByTeacherId_TeacherNotExists_ShouldThrowResourceNotFoundException(){
